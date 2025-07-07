@@ -36,20 +36,35 @@ pipeline {
             }
         }
 
-         stage("Setting up virtual environment and Installing dependencies") {
+        //  stage("Setting up virtual environment and Installing dependencies") {
+        //     steps {
+        //         script {
+        //             echo 'Setting up virtual environment and Installing dependencies'
+        //             sh ''' 
+        //             python -m venv $(VENV_DIR)
+        //             . ${VENV_DIR}/bin/activate
+        //             pip install --upgrade pip
+        //             pip install -e .
+        //             '''
+        //         }
+        //     }
+        // }
+        stage('Setting up virtual environment and Installing dependencies') {
             steps {
                 script {
                     echo 'Setting up virtual environment and Installing dependencies'
-                    sh ''' 
-                    python -m venv $(VENV_DIR)
-                    . ${VENV_DIR}/bin/activate
+                    sh '''
+                    VENV_DIR=venv
+                    python3 -m venv $VENV_DIR
+                    source $VENV_DIR/bin/activate
                     pip install --upgrade pip
-                    pip install -e .
-                    '''
-                }
-            }
+                    pip install -r requirements.txt
+                     '''
         }
-
-
     }
+}
+
+
+
+}
 }
